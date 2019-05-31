@@ -1,4 +1,4 @@
-resource "aws_directory_service_directory" "my_simplead" {
+resource "aws_directory_service_directory" "simplead" {
   type       = "SimpleAD"
   name       = var.domain_name
   short_name = var.short_name
@@ -11,13 +11,13 @@ resource "aws_directory_service_directory" "my_simplead" {
   }
 }
 
-resource "aws_vpc_dhcp_options" "my_simplead_dhcp" {
+resource "aws_vpc_dhcp_options" "simplead_dhcp" {
   domain_name         = var.domain_name
-  domain_name_servers = aws_directory_service_directory.my_simplead.dns_ip_addresses
+  domain_name_servers = aws_directory_service_directory.simplead.dns_ip_addresses
 }
 
-resource "aws_vpc_dhcp_options_association" "my_simplead_dns_resolver" {
+resource "aws_vpc_dhcp_options_association" "simplead_dns_resolver" {
   vpc_id          = var.vpc_id
-  dhcp_options_id = aws_vpc_dhcp_options.my_simplead_dhcp.id
+  dhcp_options_id = aws_vpc_dhcp_options.simplead_dhcp.id
 }
 
