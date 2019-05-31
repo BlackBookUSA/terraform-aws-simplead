@@ -11,7 +11,7 @@ variable "computer_ou" {
 }
 
 variable "size" {
-  default = "Small"
+  default     = "Small"
   description = "the size of the SimpleAD active directory service. Small or Large"
 }
 
@@ -24,11 +24,12 @@ variable "vpc_id" {
 }
 
 variable "subnet_ids" {
-  type = "list"
+  type        = list(string)
   description = "the subnet ids of the active directory service."
 }
 
 variable "iam_prefix" {
-  default = "ec2-ssm"
+  default     = "ec2-ssm"
   description = "prefix for naming iam resources."
 }
+

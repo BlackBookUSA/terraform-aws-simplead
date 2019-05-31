@@ -1,11 +1,10 @@
 resource "aws_iam_instance_profile" "ec2-ssm-role-profile" {
   name = "${var.iam_prefix}-role-profile"
-  role = "${aws_iam_role.ec2-ssm-role.name}"
+  role = aws_iam_role.ec2-ssm-role.name
 }
 
-
 resource "aws_iam_role" "ec2-ssm-role" {
-  name = "${var.iam_prefix}-role"
+  name               = "${var.iam_prefix}-role"
   assume_role_policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -20,12 +19,13 @@ resource "aws_iam_role" "ec2-ssm-role" {
     ]
 }
 EOF
+
 }
 
 # This is the same as the Amazon suppiled policy but could be tightened up a bit
 resource "aws_iam_policy" "ec2-ssm-policy" {
-  name        = "${var.iam_prefix}-policy"
-  path        = "/"
+  name = "${var.iam_prefix}-policy"
+  path = "/"
   description = "Policy required by ssm to join domain"
 
   policy = <<EOF
@@ -127,9 +127,11 @@ resource "aws_iam_policy" "ec2-ssm-policy" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy_attachment" "ec2-ssm-role-policy" {
-  role = "${aws_iam_role.ec2-ssm-role.id}"
-  policy_arn = "${aws_iam_policy.ec2-ssm-policy.arn}"   # was "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+role       = aws_iam_role.ec2-ssm-role.id
+policy_arn = aws_iam_policy.ec2-ssm-policy.arn # was "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
+
